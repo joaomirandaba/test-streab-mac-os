@@ -1,4 +1,4 @@
-name: Testar STREAB Intel no macOS
+name: Testar STREAB Intel com Interface
 
 on:
   workflow_dispatch:
@@ -12,6 +12,21 @@ jobs:
         run: |
           curl -L "https://streab.com/application/streab_mac_intel.zip" -o streab_mac_intel.zip
           ls -lh streab_mac_intel.zip
+
+      - name: Ativar Screen Sharing / VNC
+        run: |
+          sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart \
+            -activate \
+            -configure \
+            -access -on \
+            -clientopts \
+            -setvnclegacy -vnclegacy yes \
+            -setvncpw -vncpw "streab123" \
+            -restart -agent \
+            -privs -all
+
+          sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist || true
+          echo "VNC ativado com senha: streab123"
 
       - name: Abrir acesso SSH com tmate
         uses: mxschmitt/action-tmate@v3
