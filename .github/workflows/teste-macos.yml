@@ -1,15 +1,17 @@
-name: Testar STREAB no macOS
+name: Testar STREAB Intel no macOS
 
 on:
   workflow_dispatch:
 
 jobs:
   teste:
-    runs-on: macos-13
+    runs-on: macos-15-intel
 
     steps:
-      - name: Baixar arquivos do repositório
-        uses: actions/checkout@v4
+      - name: Baixar STREAB Intel direto do servidor
+        run: |
+          curl -L "https://streab.com/application/streab_mac_intel.zip" -o streab_mac_intel.zip
+          ls -lh streab_mac_intel.zip
 
       - name: Abrir acesso SSH com tmate
         uses: mxschmitt/action-tmate@v3
