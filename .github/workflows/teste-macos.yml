@@ -1,0 +1,15 @@
+name: Testar STREAB no macOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  teste:
+    runs-on: macos-13
+
+    steps:
+      - name: Baixar arquivos do repositório
+        uses: actions/checkout@v4
+
+      - name: Abrir acesso SSH com tmate
+        uses: mxschmitt/action-tmate@v3
